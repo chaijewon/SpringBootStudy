@@ -23,6 +23,9 @@ public class RecipeRestController {
    @Autowired
    private ChefDAO cDao;
    
+   @Autowired
+   private RecipeChefDAO rcDao;
+   
    @GetMapping("/recipe/list/{page}")
    public ResponseEntity<Map> recipe_list(@PathVariable("page") int page)
    {
@@ -130,6 +133,28 @@ public class RecipeRestController {
 		    *       보안 (접근 거부)
 		    *   FileNotFound 
 		    */
+	   }
+	   return new ResponseEntity<>(map,HttpStatus.OK);
+   }
+   @GetMapping("/chef/detail/{page}/{chef}")
+   public ResponseEntity<Map> chef_recipe_data(
+		     @PathVariable("page") int page, 
+		     @PathVariable("chef") String chef
+		   )
+   {
+	   Map map=new HashMap();
+	   try
+	   {
+		   int rowSize=20;
+		   int start=(rowSize*page)-rowSize;
+		   List<RecipeEntity> list=rcDao.chefRecipeData(chef, start);
+		   int count=rcDao.chefRecipeCount(chef);
+		   map.put("cList", list);
+		   map.put("count", count);
+		   map.put("curpage", page);
+	   }catch(Exception ex)
+	   {
+		   return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 	   }
 	   return new ResponseEntity<>(map,HttpStatus.OK);
    }
