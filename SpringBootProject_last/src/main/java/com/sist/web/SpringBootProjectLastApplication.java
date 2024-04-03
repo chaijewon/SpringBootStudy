@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
 		"com.sist.web.controller",
-		"com.sist.web.dao"
+		"com.sist.web.dao",
+		"com.sist.web.manager"
 })
 @SpringBootApplication
 public class SpringBootProjectLastApplication {

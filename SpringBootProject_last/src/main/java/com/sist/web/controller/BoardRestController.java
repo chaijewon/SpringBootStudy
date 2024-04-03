@@ -31,6 +31,12 @@ public class BoardRestController {
 		  int rowSize=10;
 		  int start=(rowSize*page)-rowSize; // LIMIT => 0번부터 시작 
 		  List<Board> list=bDao.boardListData(start);
+		  for(Board bb:list)
+		  {
+			  String day=bb.getRegdate();
+			  day=day.substring(0,day.indexOf(" "));
+			  bb.setRegdate(day.trim());
+		  }
 		  int totalpage=(int)(Math.ceil(bDao.count()/10.0));
 		  map.put("bList", list);
 		  map.put("totalpage", totalpage);
